@@ -1,123 +1,53 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
-class Player
+struct Vector3
 {
-
-public:
-	Player(int positionX, int positionY, int currentVelocity, int hitPoints)
-	{
-		x = positionX;
-		y = positionY;
-		velocity = currentVelocity;
-		hp = hitPoints;
-	}
-	
-	int mVelocity;
-	int x, y, velocity, hp, strength;
-	std::string userName;
-
-	void move()
-	{
-		x += velocity;
-		y += velocity;
-	}
- 
-	void damage(int ammount)
-	{
-		hp -= ammount;
-	}
-
-	std::string getPrivateString()
-	{
-		return _privateString;
-	}
-
-	void setPrivateString(std::string stringParam)
-	{
-		_privateString = stringParam;
-	}
-
-private:
-	std::string _privateString;
-
-protected:
-	std::string _protectedString;
+	float x, y, z;
 };
 
-
-void move(int& x, int& y, int& velocity)
+class Entity
 {
-	x += velocity;
-	y += velocity;
-}
+public:
+	Vector3 position;
+
+protected:
+	std::string name;
+};
+
+class Player : public Entity
+{
+public:
+
+	Vector3 getPositiong()
+	{
+		return position;
+	}
+
+	std::string getName()
+	{
+		return name;
+	}
+};
+
+class Enemy : public Entity
+{
+public:
+
+};
 
 int main()
 {
-	Player playerOne = Player(0, 0, 10, 30);
-	playerOne.userName = "Chaos";
-	playerOne.strength = 12;
-
-
-	Player playerTwo = Player(10, 15, 10, 30);
-	playerTwo.userName = "robi256";
-	playerTwo.strength = 11;
-
-	playerOne.move();
-	playerTwo.move();
-
-	playerOne.setPrivateString("Ja sam privatan!");
-
-	std::string losingPlayer;
-	std::string winningPlayer;
-
-	std::cout << playerOne.getPrivateString() << std::endl;
-
-	while (playerOne.hp > 0 && playerTwo.hp > 0 )
-	{
-		int check;
-		std::cout << "Choose which player you want to hit: ";
-		std::cin >> check;
-		std::cout << std::endl;
-
-		std::cin.ignore(1000, '\n');
-		std::cin.clear();
-		switch (check)
-		{
-		case 1:
-			playerOne.damage(playerTwo.strength);
-			std::cout << "Player one lost 5 hitpoints" << std::endl;
-			break;
-		case 2:
-			playerTwo.damage(playerOne.strength);
-			std::cout << "Player two lost 5 hitpoints" << std::endl;
-			break;
-		default:
-			break;
-		}
-
-		std::cout << "Player one hitpoints: " << playerOne.hp << std::endl;
-		std::cout << "Player two hitpoints: " << playerTwo.hp << std::endl;
-		std::cout << std::endl;
-
-		if (playerOne.hp <= 0)
-		{
-			losingPlayer = playerOne.userName;
-			winningPlayer = playerTwo.userName;
-		}
-		else if (playerTwo.hp <= 0)
-		{
-			losingPlayer = playerTwo.userName;
-			winningPlayer = playerOne.userName;
-		}
-	}
-
-	std::cout << winningPlayer << " wins! Congratulations!" << std::endl;
-	std::cout << losingPlayer << " lost! Better luck next time!" << std::endl;
 	
-	// Napraviti treceg playera, te postaviti mogucnost za biranje usernamea (korisnik sam unosi 
-	// username).
-	// Prosiriti mogucnost damageanja playera tako da se bira koji ce kojeg udariti.
+	Entity entity = Entity();
+	Vector3 vector = Vector3();
+	Player player = Player();
+	Enemy enemy = Enemy();
+	player.position;
+	enemy.position;
+	
 
+	std::cout << player.getName() << std::endl;
 	std::cin.get();
 }
