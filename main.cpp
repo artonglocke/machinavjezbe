@@ -9,6 +9,11 @@
 // Napraviti klase Triangle, Circle, Square koji implementiraju interface Shape:
 // Napraviti objekte svake podklase i ispisati Area i Perimeter!
 
+//Zadatak2:
+// Prosiriti funkcionalnost te prebaciti odgovornost za shapeove na korisnika
+// Dati korisniku na unos koji shape zeli i koliko ih zeli napraviti
+// Na kraju ispisati informacije o svim shapeovima koje je korisnik unio
+
 class IShape
 {
 public:
