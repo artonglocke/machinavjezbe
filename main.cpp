@@ -5,84 +5,119 @@
 //Polimorfizam radi samo na heapu!
 
 //Zadatak:
-// Napraviti interface Shape koji ima metode Area i Size
+// Napraviti interface Shape koji ima metode Area i Perimeter
 // Napraviti klase Triangle, Circle, Square koji implementiraju interface Shape:
-// Napraviti objekte svake podklase i ispisati Area i Size!
+// Napraviti objekte svake podklase i ispisati Area i Perimeter!
 
-class Human
+class IShape
 {
 public:
-	int hands;
-	int feet;
-	int eyes;
+	virtual double getPerimiter() = 0;
+	virtual double getArea() = 0;
+	virtual std::string getName() = 0;
+};
 
-	virtual void PrintType()
+class Triangle : public IShape
+{
+public:	
+	float a, b, c;
+
+	double getPerimiter()
 	{
-		std::cout << "I am a human being!" << std::endl;
+		return a + b + c;
 	}
 
-	virtual int getNumberOfHands() = 0;
+	double getArea()
+	{
+		double s = getPerimiter() / 2;
+		return sqrt(s*(s - a)*(s - b)*(s - c));
+	}
+
+	std::string getName()
+	{
+		return "Triangle";
+	}
 
 private:
 
 };
 
-class Male : public Human
+class Circle : public IShape
 {
 public:
-	void PrintType()
+	float radius;
+
+	double getPerimiter()
 	{
-		std::cout << "I am a male human being!" << std::endl;
+		return 2 * radius * _Pi;
 	}
 
-	int getNumberOfHands()
+	double getArea()
 	{
-		return hands;
+		return radius * radius * _Pi / 2;
+	}
+
+	std::string getName()
+	{
+		return "Circle";
+	}
+
+private:
+	float _Pi = 3.14;
+};
+
+class Rectangle : public IShape
+{
+public:
+	float a, b;
+
+	double getPerimiter()
+	{
+		return 2 * a + 2 * b;
+	}
+
+	double getArea()
+	{
+		return a * b;
+	}
+
+	std::string getName()
+	{
+		return "Rectangle";
 	}
 };
 
-class Female : public Human
+void printShapeInfo(IShape* shape)
 {
-public:
-	void PrintType()
-	{
-		std::cout << "I am a female human being!" << std::endl;
-	}
-
-	int getNumberOfHands()
-	{
-		return hands;
-	}
-};
+	std::cout << "Shape name: " << shape->getName() << std::endl;
+	std::cout << shape->getName() << " perimiter is: " << shape->getPerimiter() << std::endl;
+	std::cout << shape->getName() << " area is: " << shape->getArea() << std::endl;
+	std::cout << "===================================================" << std::endl;
+}
 
 int main()
 {
-	Male* maleObject = new Male();
-	maleObject->hands = 2;
-	maleObject->feet = 2;
-	maleObject->eyes = 2;
+	Rectangle* rect = new Rectangle();
+	rect->a = 5.0f;
+	rect->b = 7.0f;
 
-	maleObject->PrintType();
+	Circle* circle = new Circle();
+	circle->radius = 10.0f;
 
-	Female* femaleObject = new Female();
-	femaleObject->PrintType();
+	Triangle* triangle = new Triangle();
+	triangle->a = 5.0f;
+	triangle->b = 7.0f;
+	triangle->c = 9.0f;
 
-	Human* humanObject = new Female();
+	std::vector<IShape*> shapes;
+	shapes.push_back(rect);
+	shapes.push_back(circle);
+	shapes.push_back(triangle);
 
-	std::vector<Human*> humans;
-	humans.push_back(maleObject);
-	humans.push_back(femaleObject);
-	//humans.push_back(humanObject);
-
-	std::cout << "======================================" << std::endl;
-
-	for (size_t i = 0; i < humans.size(); i++)
+	for (IShape* it : shapes)
 	{
-		humans[i]->PrintType();
-		std::cout << humans[i]->getNumberOfHands() << std::endl;
+		printShapeInfo(it);
 	}
+
 	std::cin.get();
-	
-	delete femaleObject;
-	delete maleObject;
 }
